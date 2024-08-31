@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title%}Register{% endblock %}
+{% block content %}
+<p>This is the register page</p>
+<form action="/register" method="post">
+    {{form.hidden_tag()}}
+    {{form.name}}
+    {{form.email}}
+    {{form.password}}
+    {{form.submit}}
+</form>
+{% endblock%}

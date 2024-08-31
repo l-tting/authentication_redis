@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title%}Reset{% endblock %}
+{% block content %}
+<p>This is the reset page</p>
+<form action="/reset" method="post">
+{{form.hidden_tag()}}
+{{form.email}}
+{{form.submit}}
+</form>
+{% endblock%}

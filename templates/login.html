@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title%}Login{% endblock %}
+{% block content %}
+<p>This is the login page</p>
+<form action="/login" method="post">
+    {{ form.hidden_tag() }}
+    {{form.email}}
+    {{form.password}}
+    {{form.submit}}
+</form>
+<a href="/reset"> Forgot Password</a>
+{% endblock%}

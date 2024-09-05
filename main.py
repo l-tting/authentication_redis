@@ -95,7 +95,7 @@ def reset():
             redis_client.setex(redis_key, timedelta(minutes=10), otp)
             redis_client.setex(f'{redis_key}_expiration', timedelta(minutes=10), 'valid')
             message = Message(f'From {email}', sender=app.config['MAIL_DEFAULT_SENDER'], recipients=[email])
-            message.body = f' Your otp code is {otp}'
+            message.body =  f'Your password reset OTP Code is \033{otp}\033'
             try: 
                 mail.send(message)
                 flash("OTP sent successfully","success")
@@ -112,13 +112,14 @@ def verify_otp():
     if request.method == 'POST':
         if form.validate_on_submit():
             otp = form.otp.data
+            print(type(otp))
             user_id = session.get('reset_user_id')
             print(f"user_id:{user_id}")
             redis_key = f'otp:{user_id}'
             stored_otp = redis_client.get(redis_key)   
             if stored_otp:
                 if str(otp) == stored_otp.decode('utf-8'):
-                    flash("OTP verified. You are now logged in.", "success")
+                    flash("OTP verified. Change your password.", "success")
                     redis_client.delete(redis_key)
                     redis_client.delete(f'{redis_key}_expiration')
                     return redirect(url_for('password_reset'))
